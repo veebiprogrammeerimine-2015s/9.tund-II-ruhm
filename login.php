@@ -50,6 +50,22 @@
 				
 				// User klassi sees olev funktsioon
 				$login_response = $User->loginUser($email, $password_hash);
+				
+				//kasutaja on sisse logitud
+				if(isset($login_response->success)){
+					
+					echo "<pre>";
+					var_dump($login_response);
+					echo "</pre>";
+					// läks edukalt, nüüd peaks kasutaja sessiooni salvestama
+					$_SESSION["id_from_db"] = $login_response->success->user->id;
+					$_SESSION["user_email"] = $login_response->success->user->email;
+					
+					header("Location: data.php");
+					
+				}
+				
+
 			}
 
 		} // login if end

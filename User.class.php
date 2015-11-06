@@ -107,6 +107,12 @@ class User {
 			$success = new StdClass();
 			$success->message = "Kasutaja edukalt sisse logitud";
 			
+			$user = new StdClass();
+			$user->id = $id_from_db;
+			$user->email = $email_from_db;
+			
+			$success->user = $user;
+			
 			$response->success = $success;
 			
 		}else{
