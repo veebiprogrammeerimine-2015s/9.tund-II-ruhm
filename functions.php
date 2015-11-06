@@ -1,4 +1,15 @@
 <?php
+
+	require_once("../configglobal.php");
+	require_once("User.class.php");
+	
+	$database = "if15_romil_2";
+	
+	session_start();
+	
+	
+	
+	/*
 	//kõik AB'iga seonduv
 	
 	// ühenduse loomiseks kasuta
