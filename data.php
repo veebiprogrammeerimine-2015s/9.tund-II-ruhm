@@ -15,8 +15,8 @@
 	//http://www.w3schools.com/php/php_file_upload.asp
 	
 	$target_dir = "profile_pics/";
-	//profile_pics/Koala.jpeg
-	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+	//profile_pics/kasutaja_id.jpg
+	$target_file = $target_dir .$_SESSION["id_from_db"].".jpg";
 	
 	if(isset($_POST["submit"])) {
 	
@@ -56,6 +56,9 @@
 		} else {
 			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 				echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+				
+				header("Location: data.php");
+				exit();
 				//see koht kus fail pannakse meie kausta
 				
 			} else {
@@ -64,6 +67,18 @@
 		}
 		
 	} // isset post submit end
+	
+	
+	//kustuta pilt
+	if(isset($_GET["delete_image"])){
+		
+		//kustutan faili
+		unlink($target_file);
+		
+		header("Location: data.php");
+		exit();
+		
+	}
 	
 ?>
 
@@ -74,9 +89,22 @@
 
 <h2>Profiilipilt</h2>
 
-<form action="data.php" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-</form>
+<?php if(file_exists($target_file)): ?>
+	
+	<div style="
+			width:250px;
+			height:250px;
+			background-image: url(<?=$target_file;?>);
+			background-position: center center;
+			background-size: cover;
+	"></div>
+	<a href="?delete_image" >Kustuta</a>
+	
+<?php else: ?>
+	<form action="data.php" method="post" enctype="multipart/form-data">
+		Select image to upload:
+		<input type="file" name="fileToUpload" id="fileToUpload">
+		<input type="submit" value="Upload Image" name="submit">
+	</form>
+<?php endif; ?>
 
