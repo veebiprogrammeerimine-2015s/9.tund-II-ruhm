@@ -48,8 +48,8 @@
 				
 				$password_hash = hash("sha512", $password);
 				
-				// functions php failis käivitan funktsiooni
-				loginUser($email, $password_hash);
+				// User klassi sees olev funktsioon
+				$User->loginUser($email, $password_hash);
 			}
 
 		} // login if end
@@ -82,8 +82,8 @@
 				echo "<br>";
 				echo $password_hash;
 				
-				// functions.php failis käivina funktsiooni
-				createUser($create_email, $password_hash);
+				// User klassi sees olev funktsioon
+				$User->createUser($create_email, $password_hash);
 				
 			}
 
