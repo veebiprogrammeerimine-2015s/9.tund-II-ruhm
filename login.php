@@ -83,7 +83,7 @@
 				echo $password_hash;
 				
 				// User klassi sees olev funktsioon
-				$User->createUser($create_email, $password_hash);
+				$create_response = $User->createUser($create_email, $password_hash);
 				
 			}
 
@@ -117,6 +117,21 @@
   </form>
 
   <h2>Create user</h2>
+  
+  <?php if(isset($create_response->error)): ?>
+  
+	<p style="color:red;">
+		<?=$create_response->error->message;?>
+	</p>
+  
+  <?php elseif(isset($create_response->success)): ?>
+  
+	<p style="color:green;">
+		<?=$create_response->success->message;?>
+	</p>
+  
+  <?php endif; ?>  
+  
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
   	<input name="create_email" type="email" placeholder="E-post" value="<?php echo $create_email; ?>"> <?php echo $create_email_error; ?><br><br>
   	<input name="create_password" type="password" placeholder="Parool"> <?php echo $create_password_error; ?> <br><br>
